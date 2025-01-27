@@ -4,8 +4,7 @@ public class GamePlayController : MonoBehaviour
 {
     [SerializeField] private GameConfig _gameConfig;
     [SerializeField] private ResourcesManager _resourcesManager;
-    
-    private GameSceneCollector _sceneCollector;
+    [SerializeField] private GameSceneCollector _sceneCollector;
 
     private LevelTypes _currentLevel;
 
@@ -17,13 +16,15 @@ public class GamePlayController : MonoBehaviour
     private void Start()
     {
         _sceneCollector.CollectScene(_gameConfig , _currentLevel);
+
         GameEvents.StartGame();
     }
 
     private void InitGame()
     {
         _resourcesManager.Init();
+        _sceneCollector.Init();
 
-        _currentLevel = SaveManager.PlayerPrefs.LoadEnum(GameSaveKeys.CurrentLevel, LevelTypes.None);
+        _currentLevel = SaveManager.PlayerPrefs.LoadEnum(GameSaveKeys.CurrentLevel, LevelTypes.Level1);
     }
 }

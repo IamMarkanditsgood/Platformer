@@ -5,11 +5,23 @@ using UnityEngine;
 public class GameSceneCollector
 {
     [SerializeField] private Transform _levelSpawnPoint;
+    [SerializeField] private PoolObjectManager _poolObjectManager;
 
     private Transform _characterSpawnPos;
 
+    public void Init()
+    {
+        _poolObjectManager.InitPoolObjects();
+    }
+
     public void CollectScene(GameConfig gameConfig, LevelTypes currentLevel)
     {
+        if(currentLevel == LevelTypes.None)
+        {
+            Debug.LogWarning("Level has not been seted!");
+            return;
+        }
+
         SetLevel(gameConfig.GetLevelByType(currentLevel), gameConfig.LevelController);
         SetCharacter(gameConfig.CharacterConfig, gameConfig.CharacterController);
     }
@@ -21,7 +33,7 @@ public class GameSceneCollector
 
         _characterSpawnPos = level.GetCharacterSpawnPoint();
 
-        level.Init(levelConfig);
+        level.Init(levelConfig, _poolObjectManager.Obstacles);
     }
 
     private void SetCharacter(CharacterConfig characterConfig, CharacterController characterController)

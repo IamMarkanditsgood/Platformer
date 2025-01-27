@@ -1,6 +1,8 @@
 ﻿public enum ObstacleTypes
 {
     None,
-    Light,
-    Heavy,
+    Chest,
+    CrateLarge,
+    CrateSmall,
+    Barrel,
 }

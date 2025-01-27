@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5175695181828083488}
   - component: {fileID: 7195427464238286632}
   - component: {fileID: 293744233908678718}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7195427464238286632
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -193,3 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e4a01133bf8ee4da13cd9701022959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterConfig: {fileID: 11400000, guid: 87635f8bbdeba4b4ca11ecaf4fc474be, type: 2}
+  _characterMovementManager:
+    _rb: {fileID: 5175695181828083488}
+    _characterTransform: {fileID: 8506642342248036212}

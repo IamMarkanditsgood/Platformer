@@ -4,8 +4,6 @@ using UnityEngine;
 public class CharacterConfig : ScriptableObject
 {
     [SerializeField] private float _speed;
-    [SerializeField] private float _maxSpeed;
 
     public float Speed => _speed;
-    public float MaxSpeed => _maxSpeed;
 }
