@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private CharacterConfig _characterConfig;
+
+    private InputSystem _inputSystem = new InputSystem();
+
+    public void Init(CharacterConfig characterConfig)
     {
-        
+        _characterConfig = characterConfig;
+        _inputSystem.Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Subscribe();
+    }
+    private void Update()
+    {
+        _inputSystem.UpdateInputs();
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
+    }
+
+    private void Subscribe()
+    {
+
+    }
+    private void Unsubscribe()
+    {
+
     }
 }
