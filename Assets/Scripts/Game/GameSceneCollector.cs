@@ -9,19 +9,13 @@ public class GameSceneCollector
 
     private Transform _characterSpawnPos;
 
-    public void Init()
+    public void Init(PoolObjectManager poolObjectManager)
     {
-        _poolObjectManager.InitPoolObjects();
+        _poolObjectManager = poolObjectManager;
     }
 
     public void CollectScene(GameConfig gameConfig, LevelTypes currentLevel)
     {
-        if(currentLevel == LevelTypes.None)
-        {
-            Debug.LogWarning("Level has not been seted!");
-            return;
-        }
-
         SetLevel(gameConfig.GetLevelByType(currentLevel), gameConfig.LevelController);
         SetCharacter(gameConfig.CharacterConfig, gameConfig.CharacterController);
     }

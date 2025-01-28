@@ -1,8 +1,5 @@
 public enum PopupTypes 
 {
-    IAPCoins,
-    Settings,
-    WinGame,
-    Lobby,
+    LoseGame,
     Levels,
 }

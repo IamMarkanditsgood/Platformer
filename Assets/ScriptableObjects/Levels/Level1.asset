@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9d5b14d0245764d8387489d9f368a0, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  _levelType: 1
+  _levelType: 0
   _startDificultyCoefficient: 0
+  _startObstacleSpawnDelay: 5
   obstacles:
   - {fileID: 11400000, guid: 11ff4251e4d3e9648b3b4c0884d7b562, type: 2}
   - {fileID: 11400000, guid: 7323433b16d7c04488f2772e5eab1d6f, type: 2}

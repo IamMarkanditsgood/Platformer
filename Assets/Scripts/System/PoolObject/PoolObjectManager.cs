@@ -20,4 +20,18 @@ public class PoolObjectManager
         _obstacles.InitializePool(_obstaclePrefab, _obstacleContainer);
     }
 
+    public void Subscribe()
+    {
+        GameEvents.OnObstaclesDestroy += DestroyOstacle;
+    }
+
+    public void Unsubscribe()
+    {
+        GameEvents.OnObstaclesDestroy -= DestroyOstacle;
+    }
+
+    private void DestroyOstacle(ObstaclesController obstaclesController)
+    {
+        _obstacles.DisableComponent(obstaclesController);
+    }
 }

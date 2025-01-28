@@ -5,6 +5,7 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private CharacterConfig _characterConfig;
     [SerializeField] private CharacterMovementManager _characterMovementManager;
+    [SerializeField] private CharacterAnimationManager _characterAnimationManager;
 
     private InputSystem _inputSystem = new InputSystem();
 
@@ -35,15 +36,21 @@ public class CharacterController : MonoBehaviour
 
     private void Subscribe()
     {
-        InputEvents.OnMovementPressed += _characterMovementManager.Move;
+        InputEvents.OnMovementDown += Run;
         GameEvents.OnGameFinish += DisableCharacterController;
         GameEvents.OnGameStart += EnableCharacterController;
     }
     private void Unsubscribe()
     {
-        InputEvents.OnMovementPressed -= _characterMovementManager.Move;
+        InputEvents.OnMovementDown -= Run;
         GameEvents.OnGameFinish -= DisableCharacterController;
         GameEvents.OnGameStart -= EnableCharacterController;
+    }
+
+    private void Run(Vector2 movementDirection)
+    {
+        _characterMovementManager.Move(movementDirection);
+        _characterAnimationManager.Run(movementDirection.x);
     }
 
     private void DisableCharacterController()

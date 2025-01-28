@@ -1,50 +1,71 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObstaclesController : MonoBehaviour
 {
+    [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private LayerMask _borderLayer;
+
     private ObstacleDecorator _obstacleDecorator = new ObstacleDecorator();
+    private ObstacleMovementManager _obstacleMovementManager = new ObstacleMovementManager();
     private ObstaclesConfig _obstacleConfig;
 
-    public void Init(ObstaclesConfig obstacleConfig)
+    private void Start()
+    {
+        Subscribe();
+    }
+
+    private void FixedUpdate()
+    {
+        _obstacleMovementManager.Move(gameObject.transform);
+    }
+    private void OnDestroy()
+    {
+        UnSubscribe();
+    }
+
+    private void Subscribe()
+    {
+        GameEvents.OnDificultyCoeficientUpdate += UpdateFallingSpeed;
+    }
+
+    private void UnSubscribe()
+    {
+        GameEvents.OnDificultyCoeficientUpdate -= UpdateFallingSpeed;
+    }
+
+    private void UpdateFallingSpeed(float newAmount)
+    {
+        _obstacleMovementManager.CalculateFallingSpeed(newAmount, _obstacleConfig.StartFallingSpeed);
+    }
+    public void Init(ObstaclesConfig obstacleConfig, float dificultyCoefficient)
     {
         _obstacleConfig = obstacleConfig;
 
         _obstacleDecorator.ConfigObstacle(_obstacleConfig, gameObject);
-    }
-}
-public class ObstacleDecorator
-{
-    public void ConfigObstacle(ObstaclesConfig config, GameObject obstacle)
-    {
 
-        SetSprite(config.Sprite, obstacle.GetComponent<SpriteRenderer>());
-        SetCollider(config.ColliderType, obstacle);
+        _obstacleMovementManager.CalculateFallingSpeed(dificultyCoefficient, _obstacleConfig.StartFallingSpeed);
     }
-
-    private void SetSprite(Sprite sprite, SpriteRenderer spriteRenderer)
+    
+    public void OnTriggerEnter2D(Collider2D col)
     {
-        spriteRenderer.sprite = sprite;
-    }
-
-    private void SetCollider(ColliderType2D colliderType, GameObject obstacle)
-    {
-        switch (colliderType)
+        
+        if((_playerLayer.value & (1 << col.gameObject.layer)) >0)
         {
-            case ColliderType2D.Box:
-                obstacle.AddComponent<BoxCollider2D>();
-                break;
-            case ColliderType2D.Circle:
-                obstacle.AddComponent<CircleCollider2D>();
-                break;
-            case ColliderType2D.Capsule:
-                obstacle.AddComponent<CapsuleCollider2D>();
-                break;
-            case ColliderType2D.Polygon:
-                obstacle.AddComponent<PolygonCollider2D>();
-                break;
-            default:
-                Debug.LogError("Unknown collider type");
-                break;
+            HitPlayer();
         }
+        if((_borderLayer.value & (1 << col.gameObject.layer)) > 0)
+        {
+            DestroyObstacle();
+        }
+    }
+
+    private void HitPlayer()
+    {
+        GameEvents.FinishGame();
+    }
+    private void DestroyObstacle()
+    {
+        GameEvents.DestroyObstacle(this);
     }
 }
