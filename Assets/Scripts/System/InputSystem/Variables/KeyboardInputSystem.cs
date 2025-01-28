@@ -5,7 +5,6 @@ public class KeyboardInputSystem : IInputable
     public void UpdateInput()
     {
         CheckMovementInput();
-        CheckButtonsInput();
     }
 
     private void CheckMovementInput()
