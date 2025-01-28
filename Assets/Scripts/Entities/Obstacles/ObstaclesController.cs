@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObstaclesController : MonoBehaviour
@@ -8,6 +7,7 @@ public class ObstaclesController : MonoBehaviour
 
     private ObstacleDecorator _obstacleDecorator = new ObstacleDecorator();
     private ObstacleMovementManager _obstacleMovementManager = new ObstacleMovementManager();
+
     private ObstaclesConfig _obstacleConfig;
 
     private void Start()
@@ -19,9 +19,22 @@ public class ObstaclesController : MonoBehaviour
     {
         _obstacleMovementManager.Move(gameObject.transform);
     }
+
     private void OnDestroy()
     {
         UnSubscribe();
+    }
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if ((_playerLayer.value & (1 << col.gameObject.layer)) > 0)
+        {
+            HitPlayer();
+        }
+        if ((_borderLayer.value & (1 << col.gameObject.layer)) > 0)
+        {
+            DestroyObstacle();
+        }
     }
 
     private void Subscribe()
@@ -38,6 +51,7 @@ public class ObstaclesController : MonoBehaviour
     {
         _obstacleMovementManager.CalculateFallingSpeed(newAmount, _obstacleConfig.StartFallingSpeed);
     }
+
     public void Init(ObstaclesConfig obstacleConfig, float dificultyCoefficient)
     {
         _obstacleConfig = obstacleConfig;
@@ -46,24 +60,12 @@ public class ObstaclesController : MonoBehaviour
 
         _obstacleMovementManager.CalculateFallingSpeed(dificultyCoefficient, _obstacleConfig.StartFallingSpeed);
     }
-    
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        
-        if((_playerLayer.value & (1 << col.gameObject.layer)) >0)
-        {
-            HitPlayer();
-        }
-        if((_borderLayer.value & (1 << col.gameObject.layer)) > 0)
-        {
-            DestroyObstacle();
-        }
-    }
 
     private void HitPlayer()
     {
         GameEvents.FinishGame();
     }
+
     private void DestroyObstacle()
     {
         GameEvents.DestroyObstacle(this);

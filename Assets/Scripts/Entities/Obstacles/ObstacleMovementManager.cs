@@ -4,8 +4,6 @@ public class ObstacleMovementManager
 {
     private float _fallingSpeed;
 
-    
-
     public void CalculateFallingSpeed(float dificultyCoefficient, float startFallingSpeed)
     {
         _fallingSpeed = startFallingSpeed + dificultyCoefficient;

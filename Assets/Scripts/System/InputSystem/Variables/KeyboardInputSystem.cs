@@ -17,9 +17,4 @@ public class KeyboardInputSystem : IInputable
 
         InputEvents.MovementPressed(keyboardMovementDirection);
     }
-
-    private void CheckButtonsInput()
-    {
-        
-    }
 }

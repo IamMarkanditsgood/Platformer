@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameScreen : BasicScreen
@@ -15,14 +12,17 @@ public class GameScreen : BasicScreen
         Subscribe();
         SetScreen();
     }
+
     private void OnDestroy()
     {
         UnSubscribe();
     }
+
     private void Subscribe()
     {
         GameEvents.OnTimerUpdate += UpdateScore;
     }
+
     private void UnSubscribe()
     {
         GameEvents.OnTimerUpdate -= UpdateScore;

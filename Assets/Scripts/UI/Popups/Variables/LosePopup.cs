@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +9,7 @@ public class LosePopup : BasicPopup
     [SerializeField] private Button _exitGame;
     [SerializeField] private TMP_Text _score;
     [SerializeField] private TMP_Text _youLose;
+
     public override void ResetPopup()
     {
     }
@@ -29,6 +28,7 @@ public class LosePopup : BasicPopup
         _restartGame.onClick.AddListener(RestartGame);
         _exitGame.onClick.AddListener(ExitGame);
     }
+
     public override void Unsubscribe()
     {
         _restartGame.onClick.RemoveListener(RestartGame);
@@ -40,6 +40,7 @@ public class LosePopup : BasicPopup
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(sceneIndex);
     }
+
     private void ExitGame()
     {
 #if UNITY_EDITOR

@@ -41,6 +41,7 @@ public class ObstacleDecorator
                 break;
         }
     }
+
     private void AddCollider<T>(GameObject obstacle) where T : Collider2D
     {
         T collider = obstacle.AddComponent<T>();

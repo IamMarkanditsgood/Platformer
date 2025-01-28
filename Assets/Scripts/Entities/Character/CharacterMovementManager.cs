@@ -19,7 +19,6 @@ public class CharacterMovementManager
 
     public void Move(Vector2 direction)
     {
-
         if (!CanMove)
             return;
 

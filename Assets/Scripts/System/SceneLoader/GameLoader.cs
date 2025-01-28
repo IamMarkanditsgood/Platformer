@@ -25,7 +25,6 @@ public class GameLoader : MonoBehaviour
                 float progress = Mathf.Clamp01(operation.progress / 0.9f);
                 image.fillAmount = progress;
             }
-
             yield return null;
         }
     }

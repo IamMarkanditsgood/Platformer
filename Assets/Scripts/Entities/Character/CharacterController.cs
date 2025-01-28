@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -10,16 +9,6 @@ public class CharacterController : MonoBehaviour
     private InputSystem _inputSystem = new InputSystem();
 
     private bool _isEnambe;
-
-    public void Init(CharacterConfig characterConfig)
-    {
-        _characterConfig = characterConfig;
-
-        _inputSystem.Init();
-        _characterMovementManager.Init(_characterConfig.Speed);
-
-        Subscribe();
-    }
 
     private void FixedUpdate()
     {
@@ -34,12 +23,23 @@ public class CharacterController : MonoBehaviour
         Unsubscribe();
     }
 
+    public void Init(CharacterConfig characterConfig)
+    {
+        _characterConfig = characterConfig;
+
+        _inputSystem.Init();
+        _characterMovementManager.Init(_characterConfig.Speed);
+
+        Subscribe();
+    }
+
     private void Subscribe()
     {
         InputEvents.OnMovementDown += Run;
         GameEvents.OnGameFinish += DisableCharacterController;
         GameEvents.OnGameStart += EnableCharacterController;
     }
+
     private void Unsubscribe()
     {
         InputEvents.OnMovementDown -= Run;
@@ -57,16 +57,15 @@ public class CharacterController : MonoBehaviour
     {
         SwitchCharacterControl(false);
     }
+
     private void EnableCharacterController()
     {
-        
         SwitchCharacterControl(true);
     }
 
     private void SwitchCharacterControl(bool state)
     {
         _isEnambe = state;
-        _characterMovementManager.CanMove = state;
-        
+        _characterMovementManager.CanMove = state;   
     }
 }

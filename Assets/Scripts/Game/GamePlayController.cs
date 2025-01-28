@@ -12,7 +12,6 @@ public class GamePlayController : MonoBehaviour
     private int _points; 
 
     private const float _second = 1f;
-    
 
     private void Awake()
     {
@@ -24,6 +23,7 @@ public class GamePlayController : MonoBehaviour
         _sceneCollector.CollectScene(_gameConfig , _currentLevel);
         StartGame();
     }
+
     private void OnDestroy()
     {
         UnSubscribe();
@@ -45,18 +45,21 @@ public class GamePlayController : MonoBehaviour
 
         _poolObjectManager.Subscribe();
     }
+
     private void UnSubscribe()
     {
         GameEvents.OnGameFinish -= StopGame;
 
         _poolObjectManager.Unsubscribe();
     }
+
     private void StartGame()
     {
         Time.timeScale = 1f;
         GameEvents.StartGame();
         _timer = StartCoroutine(GameTimer());
     }
+
     private void StopGame()
     {
         Time.timeScale = 0f;

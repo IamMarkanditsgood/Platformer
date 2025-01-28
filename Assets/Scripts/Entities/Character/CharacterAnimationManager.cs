@@ -8,6 +8,7 @@ public class CharacterAnimationManager
     [SerializeField] private string _runParameterName;
 
     private bool _isRun;
+
     public void Run(float state)
     {
         if(state == 0 && _isRun)
